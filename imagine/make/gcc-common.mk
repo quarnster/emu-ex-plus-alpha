@@ -21,7 +21,7 @@ ifndef NORMAL_WARNINGS_CFLAGS
 endif
 
 ifndef WARN_UNUSED
- WARNINGS_CFLAGS += $(NORMAL_WARNINGS_CFLAGS) -Wno-unused
+ WARNINGS_CFLAGS += $(NORMAL_WARNINGS_CFLAGS) -Wno-unused -Wno-unused-parameter
 endif
 
 # setup optimizations
@@ -51,7 +51,7 @@ else ifdef O_BEST
 else ifdef O_LOW
  OPTIMIZE_CFLAGS = -O1
 else ifdef O_NONE
- OPTIMIZE_CFLAGS = 
+ OPTIMIZE_CFLAGS =
 else
  OPTIMIZE_CFLAGS = $(NORMAL_OPTIMIZE_CFLAGS)
 endif

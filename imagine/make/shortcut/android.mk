@@ -1,6 +1,6 @@
 include $(IMAGINE_PATH)/make/android-metadata.mk
 
-ifndef android_minSDK 
+ifndef android_minSDK
  android_minSDK := 9
 endif
 
@@ -47,7 +47,7 @@ $(android_antProperties) :
 	@mkdir -p $(@D)
 	ln -s $(ANDROID_ANT_PROPERTIES) $@
 
-endif 
+endif
 
 ifneq ($(wildcard res/android/assets),)
 android_assetsPath := $(android_targetPath)/assets
@@ -99,7 +99,7 @@ android_buildXml := $(android_targetPath)/build.xml
 $(android_buildXml) : | $(android_manifestXml) $(android_stringsXml) $(android_imagineJavaSrcPath) \
 $(android_drawableIconPaths) $(android_assetsPath) $(android_antProperties)
 	android update project -p $(@D) -n $(android_metadata_project) -t android-$(android_targetSDK)
-	rm $(@D)/proguard-project.txt
+	rm -f $(@D)/proguard-project.txt
 
 ifneq ($(wildcard res/android/proguard.cfg),)
 android_proguardConfPath := $(android_targetPath)/proguard.cfg
@@ -180,7 +180,7 @@ android-release-install : android-release-apk
 android-release-install-only :
 	adb install -r $(android_apkReleasePath)
 
-android-release-ready : 
+android-release-ready :
 	cp $(android_apkReleasePath) ../releases-bin/android/$(android_metadata_project)-$(android_minSDK)-$(android_metadata_version).apk
 
 android-check :

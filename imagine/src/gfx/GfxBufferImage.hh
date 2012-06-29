@@ -70,7 +70,7 @@ struct TextureGfxBufferImage:
 	public GfxTextureDesc
 #endif
 {
-	constexpr TextureGfxBufferImage() { }
+	TextureGfxBufferImage() { }
 	void write(Pixmap &p, uint hints);
 	void replace(Pixmap &p, uint hints);
 	Pixmap *lock(uint x, uint y, uint xlen, uint ylen);
