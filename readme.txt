@@ -13,8 +13,15 @@ ln -s gcc/bin/arm-linux-androideabi-ld arm-linux-androideabi-ld
 
 
 export ANDROID_NDK_PATH=~/android/android-ndk-r7-crystax-4
-export IMAGINE_PATH=$(pwd)/../imagine
+export IMAGINE_PATH=$(pwd)/imagine
 export PATH=$PATH:$ANDROID_NDK_PATH/toolchains/clang-android/bin
+export CHOST=arm-linux-androideabi
+
+cd imagine/bundle/all/src/freetype && make -f android-armv7.mk install
+cd ../libpng && make -f android-armv7.mk install
+cd ../unzip && make -f android-armv7.mk
+
 
 cd NES.emu
 make android_antTarget=debug config_android_noArmv6=1 android-apk
+
