@@ -1,3 +1,9 @@
+This is a mirror of http://code.google.com/p/emu-ex-plus-alpha/ with changes to make (some of) the projects compile on my computer.
+
+The sources use some C11 features so need either gcc-4.7 or clang 3.1 to compile. Clang was very easy and straight forward to setup so that's what I used. Mostly based on https://wiki.mozilla.org/Android/Clang.
+
+
+Some very rough notes (that are at this point in time no longer 100% valid so beware in case you try to follow them).
 
 
 mkdir build-android

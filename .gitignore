@@ -1,0 +1,5 @@
+*/build
+*/target
+imagine/bundle/all/src/*/build
+*.sublime-workspace
+imagine/bundle/android/armv7/lib

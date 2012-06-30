@@ -4,10 +4,10 @@
 		{
 			"cmd":
 			[
-				"make android_antTarget=debug config_android_noArmv6=1 android-apk V=1"
+				"make android_antTarget=debug config_android_noArmv6=1 android_minSDK=5 android-apk V=1"
 			],
-			"name": "NES.emu",
-			"working_dir": "${project_path:${folder}}/NES.emu",
+			"name": "emu-ex-plus-alpha",
+			"working_dir": "${project_path:${folder}}/GBA.emu",
 			"shell": true,
 			"env":
 			{
@@ -16,7 +16,22 @@
 				"CHOST":"arm-linux-androideabi"
 			},
 			"path": "/bin:/usr/bin:/usr/local/bin:$ANDROID_SDK_ROOT/tools:/Users/quarnster/android/android-ndk-r7-crystax-4/toolchains/clang-android/bin/",
-			"file_regex": "^(/[^:]+):(\\d+):(\\d+)"
+			"file_regex": "^(/[^:]+):(\\d+):(\\d+)",
+			"variants":
+			[
+				{
+					"name": "NES.emu",
+					"working_dir": "${project_path:${folder}}/NES.emu"
+				},
+				{
+					"name": "Snes9x",
+					"working_dir": "${project_path:${folder}}/Snes9x"
+				},
+				{
+					"name": "MD.emu",
+					"working_dir": "${project_path:${folder}}/MD.emu"
+				}
+			]
 		}
 	],
 	"folders":

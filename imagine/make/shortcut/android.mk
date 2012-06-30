@@ -92,7 +92,7 @@ android_stringsXml := $(android_targetPath)/res/values/strings.xml
 
 $(android_stringsXml) : metadata/conf.mk
 	@mkdir -p $(@D)
-	echo -e "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n\t<string name=\"app_name\">$(android_metadata_name)</string>\n</resources>" > $@
+	echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n\t<string name=\"app_name\">$(android_metadata_name)</string>\n</resources>" > $@
 
 android_buildXml := $(android_targetPath)/build.xml
 
