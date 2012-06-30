@@ -86,7 +86,7 @@ struct EGLWindow
 			winFormat = WINDOW_FORMAT_RGBA_8888;
 		}
 
-		printEGLConfs(display);
+		//printEGLConfs(display);
 
 		logMsg("%s (%s), extensions: %s", eglQueryString(display, EGL_VENDOR), eglQueryString(display, EGL_VERSION), eglQueryString(display, EGL_EXTENSIONS));
 	}
@@ -322,14 +322,12 @@ static void JNICALL jEnvConfig(JNIEnv* env, jobject thiz, jfloat xdpi, jfloat yd
 	pthread_create(&act->thread, &attr, android_app_entry, act);
 
 	// Wait for thread to start.
-	logMsg("Wait for the native thread to start");
 	pthread_mutex_lock(&act->mutex);
 	while (!act->running)
 	{
 		pthread_cond_wait(&act->cond, &act->mutex);
 	}
 	pthread_mutex_unlock(&act->mutex);
-	logMsg("Done with jEnvConfig");
 }
 
 static void envConfig(int orientation, int hardKeyboardState, int navigationState)
@@ -535,8 +533,8 @@ static int getPollTimeout()
 		-1;
 	if(pollTimeout >= 2000)
 		logMsg("will poll for at most %d ms", pollTimeout);
-	if(pollTimeout == -1)
-		logMsg("will poll for next event");
+	/*if(pollTimeout == -1)
+		logMsg("will poll for next event");*/
 	return pollTimeout;
 }
 
@@ -651,7 +649,6 @@ static void dlLoadFuncs()
 
 void android_main(struct android_app* state)
 {
-	logMsg("prep: %p\n", ALooper_prepare(ALOOPER_PREPARE_ALLOW_NON_CALLBACKS));
 	using namespace Base;
 	assert(!engineIsInit); // catch accidental activity restarts
 	logMsg("started native thread");
@@ -668,19 +665,17 @@ void android_main(struct android_app* state)
 			AConfiguration_getKeysHidden(config), AConfiguration_getNavHidden(config));
 	}
 	eglWin.initEGL();
-	android_app_read_cmd(state);
-	android_app_read_cmd(state);
 
 	/*TimeSys realTime;
 	realTime.setTimeNow();*/
 	for(;;)
 	{
-		int ident, events;
+		int ident, events, fd;
 		PollEventDelegate* source;
-		logMsg("entering looper");
-		while((ident=ALooper_pollAll(getPollTimeout(), NULL, &events, (void**)&source)) >= 0)
+		//logMsg("entering looper");
+		while((ident=ALooper_pollAll(getPollTimeout(), &fd, &events, (void**)&source)) >= 0)
 		{
-			logMsg("out of looper with event id %d", ident);
+			//logMsg("out of looper with event id %d", ident);
 			switch(ident)
 			{
 				bcase LOOPER_ID_MAIN: process_cmd(state);

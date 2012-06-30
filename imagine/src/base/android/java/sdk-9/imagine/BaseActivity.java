@@ -57,13 +57,13 @@ public final class BaseActivity extends NativeActivity
 		}
 	}
 
-
+	
 	private void setupEnv()
 	{
 		//Log.i(logTag, "got focus view " + getWindow().getDecorView());
 		//contentView = findViewById(android.R.id.content);//getWindow().getDecorView();
 		//view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
-
+		
 		Display dpy = getWindowManager().getDefaultDisplay();
 		DisplayMetrics metrics = new DisplayMetrics();
 		dpy.getMetrics(metrics);
@@ -104,10 +104,10 @@ public final class BaseActivity extends NativeActivity
 			context.getFilesDir().getAbsolutePath(), Environment.getExternalStorageDirectory().getAbsolutePath(),
 			getApplicationInfo().sourceDir, vibrator, hasPermanentMenuKey);
 	}
-
+	
 	private static final int SET_KEEP_SCREEN_ON = 0, SET_SYSTEM_UI_VISIBILITY = 1,
 		SHOW_SOFT_INPUT = 2, HIDE_SOFT_INPUT = 3;
-
+	
 	public void postUIThread(int func, final int param)
 	{
 		if(func == SET_KEEP_SCREEN_ON)
@@ -162,17 +162,17 @@ public final class BaseActivity extends NativeActivity
 			}
 		}
 	}
-
+	
 	public void addNotification(String onShow, String title, String message)
 	{
 		NotificationHelper.addNotification(getApplicationContext(), onShow, title, message);
 	}
-
+	
 	public void removeNotification()
 	{
 		NotificationHelper.removeNotification();
 	}
-
+	
 	@Override public void onGlobalLayout()
 	{
 		super.onGlobalLayout();
@@ -183,32 +183,29 @@ public final class BaseActivity extends NativeActivity
 		//Log.i(logTag, "height " + view.getRootView().getHeight() + ", visible " + visibleY);
 		layoutChange(visibleY);
      }
-
+	
 	@Override protected void onCreate(Bundle savedInstanceState)
 	{
-		System.out.println("onCreate start");
 		super.onCreate(savedInstanceState);
 		setupEnv();
-		System.out.println("onCreate finished");
 	}
-
+	
 	@Override protected void onResume()
 	{
-		System.out.println("onResume");
 		removeNotification();
 		super.onResume();
 	}
-
+	
 	@Override protected void onDestroy()
 	{
-		Log.i(logTag, "onDestroy");
+		//Log.i(logTag, "onDestroy");
 		removeNotification();
 		super.onDestroy();
 	}
-
+	
 	@Override public void surfaceDestroyed(SurfaceHolder holder)
 	{
-		Log.i(logTag, "surfaceDestroyed");
+		//Log.i(logTag, "surfaceDestroyed");
 		super.surfaceDestroyed(holder);
 		// In testing with CM7 on a Droid, the surface is re-created in RGBA8888 upon
 		// resuming the app and ANativeWindow_setBuffersGeometry() has no effect.

@@ -38,7 +38,7 @@ public final class BaseActivity extends Activity implements OnGlobalLayoutListen
 	static
 	{
 		//Log.i(logTag, "class init");
-
+		
 		/*try
 		{
 			SDK5Wrap.checkAvailable();
@@ -49,7 +49,7 @@ public final class BaseActivity extends Activity implements OnGlobalLayoutListen
 			sdk5Present = false;
 			//Log.i(logTag, "SDK 5 not present");
 		}*/
-
+		
 		/*boolean hasNeon = false, hasVFP = false, isARMv6 = 0;
 		try
 		{
@@ -88,7 +88,7 @@ public final class BaseActivity extends Activity implements OnGlobalLayoutListen
 		{
 			//Log.i(logTag, "error opening cpuinfo");
 		}*/
-
+		
 		/*if(hasNeon)
 		{
 			System.loadLibrary("imagine-neon");
@@ -104,16 +104,16 @@ public final class BaseActivity extends Activity implements OnGlobalLayoutListen
 		//Log.i(logTag, "class init done");
 	}
 
-	private native void envConfig(String filePath, String ExtStoragePath, float xdpi, float ydpi, int orientation, int refreshRate,
+	private native void envConfig(String filePath, String ExtStoragePath, float xdpi, float ydpi, int orientation, int refreshRate, 
 			int apiLevel, int hardKeyboardState, int navigationState, String devName, String apkPath, Vibrator sysVibrator);
-
+	
 	private static Display dpy;
-
+	
 	@Override protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		//Log.i(logTag, "onCreate");
-
+		
 		//getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		//requestWindowFeature(Window.FEATURE_PROGRESS);
@@ -148,7 +148,7 @@ public final class BaseActivity extends Activity implements OnGlobalLayoutListen
 		setContentView(glView);
 		glView.getViewTreeObserver().addOnGlobalLayoutListener(this);
 	}
-
+	
 	private static native void appPaused();
 	private static native void appResumed(boolean hasFocus);
 
@@ -191,7 +191,7 @@ public final class BaseActivity extends Activity implements OnGlobalLayoutListen
 		}
 		isPaused = false;
 	}
-
+	
 	private static native boolean appFocus(boolean hasFocus);
 	@Override public void onWindowFocusChanged(boolean hasFocus)
 	{
@@ -201,7 +201,7 @@ public final class BaseActivity extends Activity implements OnGlobalLayoutListen
 			glView.postUpdate();
 		}
 	}
-
+	
 	/*@Override protected void  onStop()
 	{
 		super.onStop();
@@ -213,7 +213,7 @@ public final class BaseActivity extends Activity implements OnGlobalLayoutListen
 		super.onDestroy();
 		removeNotification();
 	}
-
+	
 	private native boolean layoutChange(int height);
 	public void onGlobalLayout()
 	{
@@ -227,7 +227,7 @@ public final class BaseActivity extends Activity implements OnGlobalLayoutListen
 			glView.postUpdate();
 		}
 	}
-
+	
 	/*@Override public void onLowMemory()
 	{
 		Log.i(logTag, "onLowMemory");
@@ -254,21 +254,21 @@ public final class BaseActivity extends Activity implements OnGlobalLayoutListen
 		else
 			win.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	}*/
-
+	
 	// events from threads
 	private static native boolean handleAndroidMsg(int arg1, int arg2, int arg3);
 	private static Handler msgHandler = new Handler()
 	{
 		@Override public void handleMessage(Message msg)
 		{
-			Log.i(logTag, "got Msg " + msg.arg1);
+			//Log.i(logTag, "got Msg " + msg.arg1);
 			if(handleAndroidMsg(msg.what, msg.arg1, msg.arg2))
 			{
 				glView.postUpdate();
 			}
 		}
 	};
-
+	
 	// timer callback
 	private static native boolean timerCallback(boolean isPaused);
 	private static Runnable timerCallbackRunnable = new Runnable()
@@ -281,17 +281,17 @@ public final class BaseActivity extends Activity implements OnGlobalLayoutListen
 			}
 		}
 	};
-
+	
 	public void addNotification(String onShow, String title, String message)
 	{
 		NotificationHelper.addNotification(getApplicationContext(), onShow, title, message);
 	}
-
+	
 	public void removeNotification()
 	{
 		NotificationHelper.removeNotification();
 	}
-
+	
 	public void showIme(int mode)
 	{
 		InputMethodManager mIMM = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -303,7 +303,7 @@ public final class BaseActivity extends Activity implements OnGlobalLayoutListen
 		InputMethodManager mIMM = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 		mIMM.hideSoftInputFromWindow(glView.getWindowToken(), mode);
 	}
-
+	
 	private static native boolean keyEvent(int key, int down, boolean metaState);
 	private static boolean allowKeyRepeats = true;
 	private static boolean handleVolumeKeys = false;
@@ -323,13 +323,13 @@ public final class BaseActivity extends Activity implements OnGlobalLayoutListen
 		}
 		return true;
 	}
-
+	
 	// Old Orientation support code
 	// TODO: remove
 	//private static boolean orientationSensorPaused = false;
 	/*private static native void setOrientation(int o);
 	private static OrientationHandler orientation;
-
+	
 	private static int surfaceRotationToNativeBit(int rotation)
 	{
 		switch(rotation)
@@ -340,7 +340,7 @@ public final class BaseActivity extends Activity implements OnGlobalLayoutListen
 			default : return 0;
 		}
 	}
-
+	
 	private static int nativeBitToSurfaceRotation(int bit)
 	{
 		switch(bit)
@@ -351,7 +351,7 @@ public final class BaseActivity extends Activity implements OnGlobalLayoutListen
 			default : return 0;
 		}
 	}
-
+	
 	public static void onOrientationChanged(int rotation)
 	{
 		int bit = surfaceRotationToNativeBit(rotation);
@@ -360,7 +360,7 @@ public final class BaseActivity extends Activity implements OnGlobalLayoutListen
 			setOrientation(bit);
 		}
 	}
-
+	
 	public static void setAutoOrientation(boolean on, int staticO)
 	{
 		if(on)
@@ -371,7 +371,7 @@ public final class BaseActivity extends Activity implements OnGlobalLayoutListen
 			orientation.disable(nativeBitToSurfaceRotation(staticO));
 		}
 	}
-
+	
 	public static void setupOrientation()
 	{
 		orientation = new OrientationHandler((Context)act);
