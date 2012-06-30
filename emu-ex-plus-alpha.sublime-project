@@ -30,6 +30,10 @@
 				{
 					"name": "MD.emu",
 					"working_dir": "${project_path:${folder}}/MD.emu"
+				},
+				{
+					"name": "GBC.emu",
+					"working_dir": "${project_path:${folder}}/GBC.emu"
 				}
 			]
 		}
