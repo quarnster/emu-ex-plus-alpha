@@ -86,7 +86,7 @@ struct EGLWindow
 			winFormat = WINDOW_FORMAT_RGBA_8888;
 		}
 
-		//printEGLConfs(display);
+		printEGLConfs(display);
 
 		logMsg("%s (%s), extensions: %s", eglQueryString(display, EGL_VENDOR), eglQueryString(display, EGL_VERSION), eglQueryString(display, EGL_EXTENSIONS));
 	}
@@ -651,6 +651,7 @@ static void dlLoadFuncs()
 
 void android_main(struct android_app* state)
 {
+	logMsg("prep: %p\n", ALooper_prepare(ALOOPER_PREPARE_ALLOW_NON_CALLBACKS));
 	using namespace Base;
 	assert(!engineIsInit); // catch accidental activity restarts
 	logMsg("started native thread");
@@ -666,7 +667,9 @@ void android_main(struct android_app* state)
 		envConfig(jEnv->CallIntMethod(jDpy, jGetRotation.m),
 			AConfiguration_getKeysHidden(config), AConfiguration_getNavHidden(config));
 	}
-	//eglWin.initEGL();
+	eglWin.initEGL();
+	android_app_read_cmd(state);
+	android_app_read_cmd(state);
 
 	/*TimeSys realTime;
 	realTime.setTimeNow();*/

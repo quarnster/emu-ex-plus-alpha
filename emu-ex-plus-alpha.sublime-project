@@ -4,7 +4,7 @@
 		{
 			"cmd":
 			[
-				"make android_antTarget=debug config_android_noArmv6=1 android_armv7State=-marm android-apk V=1"
+				"make android_antTarget=debug config_android_noArmv6=1 android-apk V=1"
 			],
 			"name": "NES.emu",
 			"working_dir": "${project_path:${folder}}/NES.emu",
