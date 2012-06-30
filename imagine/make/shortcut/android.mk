@@ -152,8 +152,12 @@ ifndef android_antTarget
  android_antTarget := release
 endif
 
+android_gdbserver := $(android_targetPath)/libs-debug/armeabi-v7a/gdbserver
+$(android_gdbserver) :
+	cp $(ANDROID_NDK_PATH)/toolchains/arm-linux-androideabi-4.6.3/prebuilt/gdbserver $@
+
 android_apkPath := $(android_targetPath)/bin-debug/$(android_metadata_project)-$(android_antTarget).apk
-android-apk : $(android_projectDeps) $(android_armv7SOPath) $(android_armv6SOPath)
+android-apk : $(android_projectDeps) $(android_armv7SOPath) $(android_armv6SOPath) $(android_gdbserver)
 	rm -f $(android_targetPath)/bin-debug/$(android_metadata_project)-$(android_antTarget)-unsigned.apk.d
 	rm -f $(android_targetPath)/bin-debug/$(android_metadata_project).ap_.d
 	rm -f $(android_targetPath)/bin-debug/classes.dex.d

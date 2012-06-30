@@ -1,0 +1,33 @@
+{
+	"build_systems":
+	[
+		{
+			"cmd":
+			[
+				"make android_antTarget=debug config_android_noArmv6=1 android-apk"
+			],
+			"name": "NES.emu",
+			"working_dir": "${project_path:${folder}}/NES.emu",
+			"shell": true,
+			"env":
+			{
+				"ANDROID_NDK_PATH": "/Users/quarnster/android/android-ndk-r7-crystax-4",
+				"IMAGINE_PATH": "$(PWD)/../imagine",
+				"CHOST":"arm-linux-androideabi"
+			},
+			"path": "/bin:/usr/bin:/Users/quarnster/android/android-ndk-r7-crystax-4/toolchains/clang-android/bin/"
+		}
+	],
+	"folders":
+	[
+		{
+			"path": "/Users/quarnster/code/3rdparty/emu-ex-plus-alpha"
+		}
+	],
+	"settings":
+	{
+		"sublimegdb_commandline": "${home}/android/android-ndk-r7-crystax-4/toolchains/arm-linux-androideabi-4.6.3/prebuilt/darwin-x86/bin/arm-linux-androideabi-gdb -x cmd.txt --interpreter=mi lib/app_process",
+		"sublimegdb_exec_cmd": "-exec-continue",
+		"sublimegdb_workingdir": "${project_path:NES.emu}"
+	}
+}
