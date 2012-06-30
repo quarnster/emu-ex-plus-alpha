@@ -161,6 +161,7 @@ android-apk : $(android_projectDeps) $(android_armv7SOPath) $(android_armv6SOPat
 	rm -f $(android_targetPath)/bin-debug/$(android_metadata_project)-$(android_antTarget)-unsigned.apk.d
 	rm -f $(android_targetPath)/bin-debug/$(android_metadata_project).ap_.d
 	rm -f $(android_targetPath)/bin-debug/classes.dex.d
+	rm -f $(android_targetPath)/bin-debug/*.apk
 	cd $(android_targetPath) && ANT_OPTS=-Dimagine.path=$(IMAGINE_PATH) ant $(antVerbose) -Dout.dir=bin-debug \
 -Dnative.libs.absolute.dir=libs-debug -Djar.libs.dir=libs-debug $(android_antTarget)
 

@@ -4,7 +4,7 @@
 		{
 			"cmd":
 			[
-				"make android_antTarget=debug config_android_noArmv6=1 android-apk"
+				"make android_antTarget=debug config_android_noArmv6=1 android_armv7State=-marm android-apk V=1"
 			],
 			"name": "NES.emu",
 			"working_dir": "${project_path:${folder}}/NES.emu",
@@ -15,7 +15,8 @@
 				"IMAGINE_PATH": "$(PWD)/../imagine",
 				"CHOST":"arm-linux-androideabi"
 			},
-			"path": "/bin:/usr/bin:/Users/quarnster/android/android-ndk-r7-crystax-4/toolchains/clang-android/bin/"
+			"path": "/bin:/usr/bin:/usr/local/bin:$ANDROID_SDK_ROOT/tools:/Users/quarnster/android/android-ndk-r7-crystax-4/toolchains/clang-android/bin/",
+			"file_regex": "^(/[^:]+):(\\d+):(\\d+)"
 		}
 	],
 	"folders":
@@ -26,8 +27,75 @@
 	],
 	"settings":
 	{
-		"sublimegdb_commandline": "${home}/android/android-ndk-r7-crystax-4/toolchains/arm-linux-androideabi-4.6.3/prebuilt/darwin-x86/bin/arm-linux-androideabi-gdb -x cmd.txt --interpreter=mi lib/app_process",
+		"sublimegdb_commandline": "${home}/android/android-ndk-r7-crystax-4/toolchains/arm-linux-androideabi-4.6.3/prebuilt/darwin-x86/bin/arm-linux-androideabi-gdb -x cmd.txt --interpreter=mi",
 		"sublimegdb_exec_cmd": "-exec-continue",
-		"sublimegdb_workingdir": "${project_path:NES.emu}"
+		"sublimegdb_workingdir": "${project_path:NES.emu}",
+		"sublimeclang_options":
+		[
+			"-I${project_path:imagine}/bundle/android/armv7/include",
+			"-D__ARM_ARCH_5__",
+            "-D__ARM_ARCH_5T__",
+            "-D__ARM_ARCH_5E__",
+            "-D__ARM_ARCH_5TE__",
+            "-DIMAGINE_SRC",
+            "-DANDROID",
+            "-fPIC",
+            "--sysroot=/Users/quarnster/android/android-ndk-r7-crystax-4/platforms/android-9/arch-arm",
+            "-I/Users/quarnster/android/android-ndk-r7-crystax-4/sources/crystax/include",
+            "-ggdb",
+            "-O0",
+            "-I./build/android-9-armv7/gen",
+            "-Isrc",
+            "-I/Users/quarnster/code/3rdparty/emu-ex-plus-alpha/NES.emu/../imagine/src",
+            "-DUSE_LOGGER",
+            "-DCONFIG_ENV_ANDROID_MINSDK=9",
+            "-I/Users/quarnster/code/3rdparty/emu-ex-plus-alpha/NES.emu/../imagine/bundle/android/armv7/include/freetype2",
+            "-I/Users/quarnster/code/3rdparty/emu-ex-plus-alpha/NES.emu/../imagine/bundle/android/armv7/include",
+            "-I/Users/quarnster/code/3rdparty/emu-ex-plus-alpha/NES.emu/../imagine/bundle/android/armv7/include/libpng15",
+            "-I../EmuFramework/include",
+            "-DHAVE_ASPRINTF",
+            "-DPSS_STYLE=1",
+            "-DLSB_FIRST",
+            "-DFRAMESKIP",
+            "-DFCEU_NO_HQ_SOUND",
+            "-DSysDDec=float",
+            "-DSysLDDec=float",
+            "-DUSE_PIX_RGB565",
+            "-Isrc/fceu",
+            "-I/Users/quarnster/android/android-ndk-r7-crystax-4/sources/cxx-stl/stlport/stlport",
+            "-Woverloaded-virtual",
+            "-fno-rtti",
+            "-fno-exceptions",
+            "-fno-threadsafe-statics",
+            "-std=gnu++0x",
+            "-fno-short-enums",
+            "-pipe",
+            "-fvisibility=hidden",
+            "-O2",
+            "-Wdisabled-optimization",
+            "-ffast-math",
+            "-fmerge-all-constants",
+            "-fomit-frame-pointer",
+            "-ggdb",
+            "-fsingle-precision-constant",
+            "-ffunction-sections",
+            "-fdata-sections",
+            "-Wa,--noexecstack",
+            "-ggdb",
+            "-O0",
+            "-Wall",
+            "-Wextra",
+            "-Wno-comment",
+            "-Wno-missing-field-initializers",
+            "-Wno-unused-parameter",
+            "-Wno-invalid-constexpr",
+            "-Wno-attributes",
+            "-Wno-c++11-narrowing",
+            "-Wno-unknown-warning-option",
+            "-Wno-unused",
+            "-Wno-unused-parameter",
+            "-Wno-psabi",
+            "-Wdouble-promotion"
+		]
 	}
 }

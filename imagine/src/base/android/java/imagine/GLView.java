@@ -54,7 +54,7 @@ final class GLView extends SurfaceView implements SurfaceHolder.Callback, Messag
 	static native boolean touchEvent(int action, int x, int y, int pid);
 	@Override public boolean onTouchEvent(MotionEvent event)
 	{
-		//Log.i(logTag, "onTouchEvent");
+		Log.i(logTag, "onTouchEvent");
 		//Log.i(logTag, "touch in view " + event.getX() + "," + event.getY());
 		if(SDKCompat.onTouchEvent(event))
 		{
@@ -62,7 +62,7 @@ final class GLView extends SurfaceView implements SurfaceHolder.Callback, Messag
 		}
 		return true;
 	}
-	
+
 	private static native boolean trackballEvent(int action, float x, float y);
 	@Override public boolean onTrackballEvent(MotionEvent event)
 	{
@@ -80,16 +80,16 @@ final class GLView extends SurfaceView implements SurfaceHolder.Callback, Messag
 	private static Handler handler;
 	private static Runnable painter;
 	private static boolean idleHandlerActive;//runnableInQueue;
-	
+
 	private static void swapBuffers()
 	{
-		//Log.i(logTag, "gl swap");
+		Log.i(logTag, "gl swap");
 		mEglHelper.swap();
 	}
-	
+
 	@Override public void surfaceCreated(SurfaceHolder holder)
 	{
-		//Log.i(logTag, "surfaceCreated");
+		Log.i(logTag, "surfaceCreated");
 		mEglHelper.createSurface(holder);
 		if(!mEglHelper.verifyContext())
 		{
@@ -98,11 +98,11 @@ final class GLView extends SurfaceView implements SurfaceHolder.Callback, Messag
 			return;
 		}
 	}
-	
+
 	private static native boolean nativeRender();
 	@Override public boolean queueIdle()
 	{
-		//Log.i(logTag, "in idle handler");
+		Log.i(logTag, "in idle handler");
 		if(nativeRender())
 		{
 			//Log.i(logTag, "will re-run");
@@ -122,8 +122,8 @@ final class GLView extends SurfaceView implements SurfaceHolder.Callback, Messag
 	private static native void nativeResize(int w, int h);
 	@Override public void surfaceChanged(SurfaceHolder holder, int format, int w, int h)
 	{
-		/*Log.i(logTag, "surfaceChanged " + Integer.toString(w) + " " + Integer.toString(h)
-		+ " " + getHolder().getSurfaceFrame().toString());*/
+		Log.i(logTag, "surfaceChanged " + Integer.toString(w) + " " + Integer.toString(h)
+		+ " " + getHolder().getSurfaceFrame().toString());
 		if(mEglHelper.mEglContext == null)
 		{
 			//Log.i(logTag, "context lost");
@@ -150,7 +150,7 @@ final class GLView extends SurfaceView implements SurfaceHolder.Callback, Messag
 		}
 		initSurface = true;
 	}
-	
+
 	public static void postUpdate()
 	{
 		if(!idleHandlerActive)
@@ -160,14 +160,14 @@ final class GLView extends SurfaceView implements SurfaceHolder.Callback, Messag
 			//Log.i(logTag, "start idle handler");
 		}
 	}
-	
+
 	public static void stopUpdate()
 	{
 		//Log.i(logTag, "stop idle handler");
 		queue.removeIdleHandler(mainGlView);
 		idleHandlerActive = false;
 	}
-	
+
 	@Override public void surfaceDestroyed(SurfaceHolder  holder)
 	{
 		//Log.i(logTag, "surfaceDestroyed");
