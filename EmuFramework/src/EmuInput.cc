@@ -84,6 +84,7 @@ void KeyMapping::buildAll()
 	build(EmuControls::category);
 }
 
+
 template <size_t S>
 void KeyMapping::build(KeyCategory (&category)[S])
 {
@@ -124,6 +125,9 @@ void KeyMapping::build(KeyCategory (&category)[S])
 		}
 	}
 }
+template
+void KeyMapping::build<2>(KeyCategory (&category)[2]);
+
 
 void resetBaseKeyProfile(uint devType)
 {

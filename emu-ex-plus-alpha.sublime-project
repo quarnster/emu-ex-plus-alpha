@@ -4,7 +4,7 @@
 		{
 			"cmd":
 			[
-				"make android_antTarget=debug config_android_noArmv6=1 android_minSDK=5 android-apk V=1"
+				"make android_antTarget=debug config_android_noArmv6=1 android_minSDK=5 android-release-apk V=1"
 			],
 			"name": "emu-ex-plus-alpha",
 			"working_dir": "${project_path:${folder}}/GBA.emu",
